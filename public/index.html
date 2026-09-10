@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Company Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="brand">
+        <div class="brand-mark">CP</div>
+        <div>
+          <p class="eyebrow">COMPANY PORTAL</p>
+          <h1>Secure Password Validator</h1>
+        </div>
+      </div>
+
+      <p class="subtitle">
+        Create a password that satisfies the company's security policy.
+        Validation is modeled as a deterministic finite automaton (DFA).
+      </p>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input id="password" type="password" autocomplete="new-password"
+                 placeholder="Enter your password" />
+          <button id="toggleBtn" class="icon-btn" type="button" aria-label="Show password">Show</button>
+        </div>
+      </div>
+
+      <div class="requirements">
+        <div class="req-header">
+          <span>Password requirements</span>
+          <span id="statusBadge" class="badge neutral">Waiting</span>
+        </div>
+
+        <div class="requirement" data-rule="length">
+          <span class="check">×</span>
+          <span>At least 8 characters</span>
+        </div>
+        <div class="requirement" data-rule="upper">
+          <span class="check">✓</span>
+          <span>Uppercase letters allowed (A–Z)</span>
+        </div>
+        <div class="requirement" data-rule="lower">
+          <span class="check">✓</span>
+          <span>Lowercase letters allowed (a–z)</span>
+        </div>
+        <div class="requirement" data-rule="digit">
+          <span class="check">✓</span>
+          <span>Digits allowed (0–9)</span>
+        </div>
+        <div class="requirement" data-rule="charset">
+          <span class="check">✓</span>
+          <span>Only letters and digits are accepted by the DFA</span>
+        </div>
+      </div>
+
+      <button id="validateBtn" class="primary-btn" type="button">Validate Password</button>
+
+      <div id="result" class="result hidden" aria-live="polite">
+        <div id="resultIcon" class="result-icon">✓</div>
+        <div>
+          <h2 id="resultTitle">Password Accepted</h2>
+          <p id="resultText"></p>
+        </div>
+      </div>
+
+      <div class="dfa-panel">
+        <div class="dfa-title-row">
+          <div>
+            <p class="eyebrow">AUTOMATA VIEW</p>
+            <h2>DFA Validation Trace</h2>
+          </div>
+          <span id="statePill" class="state-pill">q0</span>
+        </div>
+        <div id="trace" class="trace">
+          Enter a password and validate it to see the DFA state sequence.
+        </div>
+      </div>
+
+      <div class="footer-note">
+        <strong>TOC concept:</strong> The validator reads the password character-by-character,
+        classifies each symbol as uppercase, lowercase, or digit, and checks whether the
+        final state satisfies all required conditions.
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

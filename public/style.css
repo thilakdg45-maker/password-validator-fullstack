@@ -1,0 +1,339 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172033;
+  background: #eef2f7;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.10), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.08), transparent 30%),
+    #eef2f7;
+}
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px 18px;
+}
+
+.card {
+  width: min(720px, 100%);
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid #dfe5ee;
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 24px 70px rgba(25, 39, 67, 0.12);
+}
+
+.brand {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.brand-mark {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: #172033;
+  color: white;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.eyebrow {
+  margin: 0 0 5px;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+h1, h2, p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: clamp(25px, 4vw, 34px);
+  letter-spacing: -0.035em;
+}
+
+.subtitle {
+  margin: 20px 0 28px;
+  color: #64748b;
+  line-height: 1.65;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 9px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.password-wrap {
+  display: flex;
+  border: 1px solid #cfd7e3;
+  border-radius: 13px;
+  overflow: hidden;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.password-wrap:focus-within {
+  border-color: #64748b;
+  box-shadow: 0 0 0 4px rgba(100, 116, 139, 0.10);
+}
+
+input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  padding: 15px 16px;
+  font-size: 16px;
+  color: #172033;
+}
+
+.icon-btn {
+  border: 0;
+  border-left: 1px solid #e2e8f0;
+  padding: 0 16px;
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.requirements {
+  margin-top: 22px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 17px;
+  background: #f8fafc;
+}
+
+.req-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.badge {
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11px;
+}
+
+.badge.neutral {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.badge.good {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.bad {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.requirement {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.requirement.valid {
+  color: #166534;
+}
+
+.requirement.invalid {
+  color: #b91c1c;
+}
+
+.check {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.requirement.valid .check {
+  background: #bbf7d0;
+  color: #166534;
+}
+
+.requirement.invalid .check {
+  background: #fecaca;
+  color: #b91c1c;
+}
+
+.primary-btn {
+  width: 100%;
+  margin-top: 18px;
+  border: 0;
+  border-radius: 13px;
+  padding: 15px 18px;
+  background: #172033;
+  color: white;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.primary-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.result {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 15px;
+}
+
+.result.accept {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.result.reject {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.result-icon {
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+.accept .result-icon {
+  background: #bbf7d0;
+  color: #166534;
+}
+
+.reject .result-icon {
+  background: #fecaca;
+  color: #991b1b;
+}
+
+.result h2 {
+  margin-bottom: 4px;
+  font-size: 17px;
+}
+
+.result p {
+  margin-bottom: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.hidden {
+  display: none;
+}
+
+.dfa-panel {
+  margin-top: 22px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+}
+
+.dfa-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dfa-title-row h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.state-pill {
+  padding: 7px 11px;
+  border-radius: 9px;
+  background: #172033;
+  color: white;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.trace {
+  margin-top: 15px;
+  padding: 14px;
+  border-radius: 11px;
+  background: #f8fafc;
+  color: #475569;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+.trace .accepted {
+  color: #166534;
+  font-weight: 800;
+}
+
+.trace .rejected {
+  color: #b91c1c;
+  font-weight: 800;
+}
+
+.footer-note {
+  margin-top: 20px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 560px) {
+  .card {
+    padding: 24px 18px;
+    border-radius: 18px;
+  }
+
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+  }
+}
