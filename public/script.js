@@ -28,35 +28,44 @@ function updateRequirements(password, showResults = false) {
   Object.entries(rules).forEach(([rule, valid]) => {
     const el = document.querySelector(`[data-rule="${rule}"]`);
     if (!el) return;
+
+    const check = el.querySelector(".check");
     el.classList.remove("valid", "invalid");
-    if (rule === "upper" || rule === "lower" || rule === "digit") {
-      el.querySelector(".check").textContent = "✓";
+
+    // Keep all requirements neutral until the user starts typing.
+    if (!showResults && password.length === 0) {
+      if (check) check.textContent = "✓";
       return;
     }
-    if (showResults || password.length > 0) {
-      el.classList.add(valid ? "valid" : "invalid");
-      el.querySelector(".check").textContent = valid ? "✓" : "×";
-    } else {
-      el.querySelector(".check").textContent = "×";
-    }
+
+    // Every requirement is now evaluated, including
+    // uppercase, lowercase, and digit.
+    el.classList.add(valid ? "valid" : "invalid");
+    if (check) check.textContent = valid ? "✓" : "×";
   });
+
   return rules;
 }
 
 function escapeHtml(value) {
   return value.replace(/[&<>"']/g, char => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
   }[char]));
 }
 
 function renderTrace(data) {
   statePill.textContent = data.finalState;
-  if (!data.trace || data.trace.length <= 1) {
+
+  if (!data.trace || data.trace.length === 0) {
     trace.textContent = "Enter a password and validate it to see the DFA state sequence.";
     return;
   }
 
-  const rows = data.trace.slice(1).map(step =>
+  const rows = data.trace.map(step =>
     `<div class="trace-step"><span>${escapeHtml(step.character)}</span> <b>(${step.symbol})</b> : ${escapeHtml(step.from)} → ${escapeHtml(step.to)}</div>`
   ).join("");
 
@@ -84,13 +93,19 @@ async function runValidation() {
 
     result.classList.remove("hidden", "accept", "reject");
     result.classList.add(data.accepted ? "accept" : "reject");
+
     resultIcon.textContent = data.accepted ? "✓" : "×";
     resultTitle.textContent = data.accepted ? "Password Accepted" : "Password Rejected";
-    resultText.textContent = data.accepted
-      ? "The backend DFA reached the accepting state q8."
-      : `The backend DFA stopped in ${data.finalState}.`;
+
+    if (data.accepted) {
+      resultText.textContent = "All password requirements were satisfied.";
+    } else {
+      resultText.textContent = data.reason || `The backend DFA stopped in ${data.finalState}.`;
+    }
+
     statusBadge.textContent = data.accepted ? "Accepted" : "Rejected";
     statusBadge.className = data.accepted ? "badge good" : "badge bad";
+
     renderTrace(data);
   } catch (error) {
     result.classList.remove("hidden", "accept");
@@ -119,5 +134,9 @@ passwordInput.addEventListener("input", () => {
 });
 
 validateBtn.addEventListener("click", runValidation);
-passwordInput.addEventListener("keydown", event => { if (event.key === "Enter") runValidation(); });
+
+passwordInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") runValidation();
+});
+
 updateRequirements("");
