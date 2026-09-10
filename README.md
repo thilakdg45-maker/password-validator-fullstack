@@ -1,29 +1,77 @@
-# Secure Password Validator — Frontend + Backend + JFLAP
+# Secure Password Validator
 
-This version connects the Company Portal frontend to a Node.js backend.
+A company portal password validation system built using a **Deterministic Finite Automaton (DFA)** with a Node.js backend and web frontend.
 
-## Architecture
+## Project Overview
 
-Browser → `POST /api/validate` → Node.js backend → JFLAP DFA transitions → JSON result → Browser
+This project demonstrates how a DFA can be used to validate password requirements.
 
-The backend loads `dfa/password_validator_9_state_Final.jff` and applies its transitions. The website classifies real characters internally as:
+The system checks whether a password satisfies the company's security policy:
 
-- `U` = uppercase letter
-- `L` = lowercase letter
-- `D` = digit
-- `X` = invalid character
+- At least 8 characters
+- At least 1 uppercase letter (A–Z)
+- At least 1 lowercase letter (a–z)
+- At least 1 digit (0–9)
+- Only letters and digits are allowed
 
-The user never has to type U/L/D.
+The DFA tracks whether uppercase letters, lowercase letters, and digits have appeared in the password. The minimum length requirement is additionally checked by the backend.
 
-## Current DFA policy
+## DFA Design
 
-The uploaded 9-state DFA accepts strings of at least 8 characters using U/L/D. `q8` is the accepting state. Invalid characters are rejected by the application as `qDead`.
+The DFA uses the following input symbols:
 
-## Run
+- `U` = Uppercase letter (A–Z)
+- `L` = Lowercase letter (a–z)
+- `D` = Digit (0–9)
 
-1. Install Node.js if it is not already installed.
-2. Open this folder in VS Code.
-3. Run `node server.js`.
-4. Open `http://localhost:3000`.
+The DFA contains 8 states:
 
-No npm packages are required.
+| State | Meaning |
+|---|---|
+| q0 | No required character category seen |
+| qU | Uppercase seen |
+| qL | Lowercase seen |
+| qD | Digit seen |
+| qUL | Uppercase + lowercase seen |
+| qUD | Uppercase + digit seen |
+| qLD | Lowercase + digit seen |
+| qULD | Uppercase + lowercase + digit seen |
+
+`q0` is the initial state.
+
+`qULD` is the accepting state.
+
+A password is accepted only when:
+
+1. The DFA reaches `qULD`
+2. The password contains at least 8 characters
+3. Every character is a letter or digit
+
+## System Architecture
+
+```text
+User
+  |
+  v
+Web Interface
+  |
+  | POST /api/validate
+  v
+Node.js Backend
+  |
+  v
+Password Character Classification
+  |
+  +--> U = Uppercase
+  +--> L = Lowercase
+  +--> D = Digit
+  +--> X = Invalid character
+  |
+  v
+JFLAP DFA
+  |
+  v
+Validation Result + State Trace
+  |
+  v
+Web Interface
